@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/yuta0801/twitcasting.js#readme",
   "dependencies": {
-    "base-64": "^0.1.0"
+    "base-64": "^0.1.0",
+    "request": "^2.81.0"
   }
 }
