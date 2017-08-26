@@ -411,8 +411,8 @@ class Client {
       events: events,
     }, data => {
       return {
-        userId: data.user_id;
-        addedEvents: data.added_events;
+        userId: data.user_id,
+        addedEvents: data.added_events,
       }
     });
   }
