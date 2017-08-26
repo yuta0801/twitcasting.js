@@ -1,2 +1,3 @@
 # twitcasting.js
-A JS interface for the TwitCasting API.
+
+A JavaScript library for interacting with the TwitCasting API

@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/yuta0801/twitcasting.js/issues"
   },
-  "homepage": "https://github.com/yuta0801/twitcasting.js#readme"
+  "homepage": "https://github.com/yuta0801/twitcasting.js#readme",
+  "dependencies": {
+    "base-64": "^0.1.0"
+  }
 }
