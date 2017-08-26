@@ -1,7 +1,7 @@
 const base64 = require('base-64');
 const Request = require('./Request');
 const User = require('../structures/User');
-const App = require('../structures/App')
+const App = require('../structures/App');
 
 class Client {
   /**

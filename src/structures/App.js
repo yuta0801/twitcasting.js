@@ -6,7 +6,7 @@ class App {
     if (data) this.setup(data);
   }
 
-  this.setup(data) {
+  setup(data) {
     /**
      * アプリケーションのクライアントID
      * @type {string}
