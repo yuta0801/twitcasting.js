@@ -1,22 +1,22 @@
 const request = require('request');
 const Url = request('url');
-const Client = require('./Client')
+const Client = require('./Client');
 
 class Request {
   constructor(auth) {
     this.auth = auth;
   }
 
-  send(url, body, callback) {
+  send(uri, body, callback) {
     if (typeof body == 'function' && callback == null) {
       callback = body;
       body = null;
     }
-    request(this.options(url, body), callback);
+    request(this.options(uri, body), callback);
   }
 
-  options(url, body) {
-    let arr = url.match(/^(GET|POST|PUT|DELETE) (.*)/);
+  options(uri, body) {
+    let arr = uri.match(/^(GET|POST|PUT|DELETE) (.*)/);
     if (!Url.parse(arr[2]).hostname) arr[2] = Client.baseUrl + arr[2];
     return {
       url: arr[1],
