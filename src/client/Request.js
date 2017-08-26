@@ -7,19 +7,19 @@ class Request {
     this.auth = auth;
   }
 
-  send(url, body, callback) {
+  send(uri, body, callback) {
     if (typeof body == 'function' && callback == null) {
       callback = body;
       body = null;
     }
-    request(this.options(url, body), callback);
+    request(this.options(uri, body), callback);
   }
 
-  options(url, body) {
-    let arr = url.match(/^(GET|POST|PUT|DELETE) (.*)/);
+  options(uri, body) {
+    let arr = uri.match(/^(GET|POST|PUT|DELETE) (.*)/);
     if (!url.parse(arr[2]).hostname) arr[2] = Client.baseUrl + arr[2];
     return {
-      url: arr[1],
+      uri: arr[1],
       method: arr[2],
       headers: {
         'Accept':'application/json',
