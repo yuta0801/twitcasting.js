@@ -1,5 +1,5 @@
 const request = require('request');
-const url = request('url');
+const Url = request('url');
 const Client = require('./Client')
 
 class Request {
@@ -7,19 +7,19 @@ class Request {
     this.auth = auth;
   }
 
-  send(uri, body, callback) {
+  send(url, body, callback) {
     if (typeof body == 'function' && callback == null) {
       callback = body;
       body = null;
     }
-    request(this.options(uri, body), callback);
+    request(this.options(url, body), callback);
   }
 
-  options(uri, body) {
-    let arr = uri.match(/^(GET|POST|PUT|DELETE) (.*)/);
-    if (!url.parse(arr[2]).hostname) arr[2] = Client.baseUrl + arr[2];
+  options(url, body) {
+    let arr = url.match(/^(GET|POST|PUT|DELETE) (.*)/);
+    if (!Url.parse(arr[2]).hostname) arr[2] = Client.baseUrl + arr[2];
     return {
-      uri: arr[1],
+      url: arr[1],
       method: arr[2],
       headers: {
         'Accept':'application/json',
