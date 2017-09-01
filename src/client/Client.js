@@ -6,10 +6,10 @@ const App = require('../structures/App');
 class Client {
   /**
    * 通信するための情報を記録する
-   * @param  {string} tokenOrClinetID トークンまたはClinetID。
-   * ClinetIDの場合は、ClientSecretを入力する必要があります。
-   * @param  {string} [ClientSecret]  ClientSecret。
-   * ClinetIDが入力された場合にのみ必要です。
+   * @param  {string} tokenOrClinetID トークンまたはClinetID
+   * ClinetIDの場合は、ClientSecretを入力する必要があります
+   * @param  {string} [ClientSecret]  ClientSecret
+   * ClinetIDが入力された場合にのみ必要です
    * @example
    * // tokenを使用する場合
    * const token = '_Token_';
@@ -33,14 +33,9 @@ class Client {
   }
 
   /**
-   * ユーザの id または screen_id
-   * @type {string} UserId
-   */
-
-  /**
-   * ユーザ情報を取得する。
-   * @param  {UserId} userId
-   * @return {User} ユーザを表す
+   * ユーザ情報を取得する
+   * @param  {string} userId ユーザの id または screen_id
+   * @return {User}
    */
   getUserInfo(userId) {
     this.request(`GET /users/${userId}`, data => {
@@ -61,34 +56,34 @@ class Client {
 
   /**
    * アプリケーション、ユーザ情報
-   * @typedef {Object} Application
-   * @property {App} app アプリケーションを表す
-   * @property {User} user ユーザを表すオブジェクト
+   * @typedef  {Object} Application
+   * @property {App}    app  アプリケーションを表す
+   * @property {User}   user ユーザを表すオブジェクト
    */
 
   /**
-   * アクセストークンを検証し、ユーザ情報を取得する。
+   * アクセストークンを検証し、ユーザ情報を取得する
    * @return {Application}
    */
   verifyCredentials() {
     this.request('GET /verify_credentials', data => {
       return {
-        app: new User(data.user),
+        app:  new User(data.user),
         user: new App(data.app),
       }
     });
   }
 
   /**
-   * ライブ（録画）情報を表す
+   * ライブ（録画）情報を表すオブジェクト
    * @type {Object} MovieInfo
-   * @property {Movie} movie ライブ（録画）を表す
-   * @property {User} broadcaster 配信者のユーザ情報
-   * @property {Array} tags 設定されているタグの配列
+   * @property {Movie} movie       ライブ（録画）を表すクラス
+   * @property {User}  broadcaster 配信者のユーザ情報
+   * @property {Array} tags        設定されているタグの配列
    */
 
   /**
-   * ライブ（録画）情報を取得する。
+   * ライブ（録画）情報を取得する
    * @param  {string} movieId 動画ID
    * @return {MovieInfo}
    */
@@ -105,13 +100,13 @@ class Client {
   /**
    * 複数のライブ（録画）を表す
    * @type {Object} Movies
-   * @property {number} totalCount 指定フィルター条件での総件数
+   * @property {number}  totalCount 指定フィルター条件での総件数
    * @property {Movie[]} Movieの配列
    */
 
   /**
-   * ユーザーが保有する過去ライブ（録画）の一覧を作成日時の降順で取得する。
-   * @param  {UserId} userId
+   * ユーザーが保有する過去ライブ（録画）の一覧を作成日時の降順で取得する
+   * @param  {string} userId ユーザの id または screen_id
    * @param  {number} [offset=0] 先頭からの位置
    * @param  {number} [limit=20] 最大取得件数(場合により、指定件数に満たない数の動画を返す可能性があります)
    * @return {Movies}
@@ -131,8 +126,8 @@ class Client {
   }
 
   /**
-   * ユーザーが配信中の場合、ライブ情報を取得する。
-   * @param  {UserId} userId
+   * ユーザーが配信中の場合、ライブ情報を取得する
+   * @param  {string} userId ユーザの id または screen_id
    * @return {MovieInfo}
    */
   getCurrentLive(userId) {
@@ -154,7 +149,7 @@ class Client {
    */
 
   /**
-   * コメントを作成日時の降順で取得する。
+   * コメントを作成日時の降順で取得する
    * @param  {string} movieId 動画ID
    * @param  {number} [offset=0] 先頭からの位置
    * @param  {number} [limit=10] 取得件数
@@ -186,7 +181,7 @@ class Client {
    */
 
   /**
-   * コメントを投稿する。 ユーザ単位でのみ実行可能です。
+   * コメントを投稿する ユーザ単位でのみ実行可能です
    * @param  {string} movieId 動画ID
    * @param  {string} comment 投稿するコメント文章
    * @param  {string} [sns=none] SNSへの同時投稿
@@ -202,7 +197,7 @@ class Client {
   }
 
   /**
-   * コメントを削除する。
+   * コメントを削除する
    * @param  {string} movieId   動画ID
    * @param  {string} commentId コメントID
    * @return {string}           削除したコメントのID
@@ -221,9 +216,9 @@ class Client {
    */
 
   /**
-   * ユーザーが、ある別のユーザのサポーターであるかの状態を取得する。
-   * @param  {UserId} userId
-   * @param  {UserId} targetUserId 対象ユーザ
+   * ユーザーが、ある別のユーザのサポーターであるかの状態を取得する
+   * @param  {string} userId       ユーザの id または screen_id
+   * @param  {string} targetUserId 対象ユーザ
    * @return {SupportingStatus}
    */
   getSupportingStatus(userId, targetUserId) {
@@ -272,9 +267,9 @@ class Client {
 
   /**
    * 指定したユーザーがサポートしているユーザーの一覧を取得する
-   * @param  {UserId} userId
+   * @param  {string} userId     ユーザの id または screen_id
    * @param  {number} [offset=0] 先頭からの位置
-   * @param  {number} [limit=20]  取得件数
+   * @param  {number} [limit=20] 取得件数
    * @return {Supporting}
    */
   supportingList(userId, offset, limit) {
@@ -294,8 +289,8 @@ class Client {
   }
 
   /**
-   * 指定したユーザーをサポートしているユーザーの一覧を取得する。
-   * @param  {UserId} userId
+   * 指定したユーザーをサポートしているユーザーの一覧を取得する
+   * @param  {string} userId ユーザの id または screen_id
    * @param  {number} offset 先頭からの位置
    * @param  {number} limit  取得件数
    * @param  {string} sort   ソート順
@@ -319,7 +314,7 @@ class Client {
   }
 
   /**
-   * 配信中のライブがあるカテゴリのみを取得する。
+   * 配信中のライブがあるカテゴリのみを取得する
    * @param  {string} lang 検索対象の言語
    * @return {Categorie[]} Categoryオブジェクトの配列
    */
@@ -336,7 +331,7 @@ class Client {
   }
 
   /**
-   * ユーザを検索する。
+   * ユーザを検索する
    * @param  {string} words スペース区切りで複数単語のAND検索
    * @param  {number} [limit] 取得件数
    * @param  {string} [lang=ja] 検索対象のユーザの言語設定
@@ -355,7 +350,7 @@ class Client {
   }
 
   /**
-   * 配信中のライブを検索する。
+   * 配信中のライブを検索する
    * @param  {number} limit   取得件数
    * @param  {number} type    検索種別
    * @param  {string} context 検索
@@ -383,10 +378,10 @@ class Client {
    */
 
   /**
-   * アプリケーションに紐づく WebHook の一覧を取得する。
+   * アプリケーションに紐づく WebHook の一覧を取得する
    * @param  {number} limit  取得件数
    * @param  {number} offset 先頭からの位置
-   * @param  {UserId} userId
+   * @param  {string} userId 対象ユーザの id
    * @return {WebHookList}
    */
   getWebHookList(limit, offset, userId) {
@@ -406,15 +401,15 @@ class Client {
 
   /**
    * WebHook情報
-   * @typedef {Object} WebHookInfo
-   * @property {UserId} userId
-   * @property {Array} addedEvents
+   * @typedef {Object}  WebHookInfo
+   * @property {string} userId      ユーザID
+   * @property {Array}  addedEvents
    */
 
   /**
-   * WebHookを新規登録します。
-   * @param  {UserId} userId
-   * @param  {Array} events フックするイベント種別
+   * WebHookを新規登録します
+   * @param  {string} userId ユーザID
+   * @param  {Array}  events フックするイベント種別
    * @return {WebHookInfo}
    */
   registerWebHook(userId, events) {
@@ -430,8 +425,8 @@ class Client {
   }
 
   /**
-   * WebHookを削除する。
-   * @param  {string} user_id ユーザID
+   * WebHookを削除する
+   * @param  {string} user_id ユーザの id または screen_id
    * @param  {Array} events  フックを削除するイベント種別
    * @return {Object}         user_id、removed_events
    */
@@ -456,7 +451,7 @@ class Client {
    */
 
   /**
-   * アクセストークンに紐づくユーザの配信用のURL(RTMP)を取得する。
+   * アクセストークンに紐づくユーザの配信用のURL(RTMP)を取得する
    * @return {RTMPInfo}
    */
   getRTMPUrl() {
@@ -477,7 +472,7 @@ class Client {
    */
 
   /**
-   * アクセストークンに紐づくユーザの配信用のURL (WebM, WebSocket)を取得する。
+   * アクセストークンに紐づくユーザの配信用のURL (WebM, WebSocket)を取得する
    * @return {WebMInfo}
    */
   getWebMUrl() {

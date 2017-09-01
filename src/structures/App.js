@@ -1,5 +1,5 @@
 /**
- * @type {[type]}
+ * アプリケーションを表すクラス
  */
 class App {
   constructor(data) {
@@ -20,8 +20,8 @@ class App {
     this.name = data.name;
 
     /**
-     * アプリケーション開発者のユーザID
-     * @type {string}
+     * アプリケーション所有者のユーザID
+     * @type {UserId}
      */
     this.ownerUserId = data.owner_user_id;
   }
