@@ -22,10 +22,11 @@ class Client {
    */
   constructor(tokenOrClinetID, ClientSecret = null) {
     if (ClientSecret) {
-      let str = base64.encode(`${ClientID}:${ClientSecret}`);
+      let basic = base64.encode(`${tokenOrClinetID}:${ClientSecret}`);
+      this.basic = basic;
       this.auth = `Basic ${str}`;
     } else {
-      this.auth = `Bearer ${token}`;
+      this.auth = `Bearer ${tokenOrClinetID}`;
     }
 
     this.request = new Request(this.auth);

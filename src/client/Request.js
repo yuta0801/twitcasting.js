@@ -17,8 +17,8 @@ class Request {
   options(url, body) {
     let arr = url.match(/^(GET|POST|PUT|DELETE) (.*)/);
     return {
-      url: arr[1],
-      method: Client.baseUrl + arr[2],
+      url: Client.baseUrl + arr[1],
+      method: arr[2],
       headers: {
         'Accept':'application/json',
         'X-Api-Version': '2.0',
