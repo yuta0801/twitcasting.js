@@ -11,19 +11,19 @@ class App {
      * アプリケーションのクライアントID
      * @type {string}
      */
-    this.clientId = data.app.client_id;
+    this.clientId = data.client_id;
 
     /**
      * アプリケーション名
      * @type {string}
      */
-    this.name = data.app.name;
+    this.name = data.name;
 
     /**
      * アプリケーション開発者のユーザID
      * @type {string}
      */
-    this.ownerUserId = data.app.owner_user_id;
+    this.ownerUserId = data.owner_user_id;
   }
 }
 

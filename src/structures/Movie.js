@@ -1,5 +1,5 @@
 /**
- * ライブ（録画）を表す
+ * ライブ（録画）を表すクラス
  */
 class Movie {
   constructor(data) {
@@ -11,127 +11,127 @@ class Movie {
      * ライブID
      * @type {string}
      */
-    this.id = data.movie.id;
+    this.id = data.id;
 
     /**
      * ライブ配信者のユーザID
      * @type {string}
      */
-    this.userId = data.movie.user_id;
+    this.userId = data.user_id;
 
     /**
      * タイトル
      * @type {string}
      */
-    this.title = data.movie.title;
+    this.title = data.title;
 
     /**
      * テロップ
      * @type {?string}
      */
-    this.subtitle = data.movie.subtitle;
+    this.subtitle = data.subtitle;
 
     /**
      * ライブ配信者の最新コメントの文章
      * @type {?string}
      */
-    this.lastOwnerComment = data.movie.last_owner_comment;
+    this.lastOwnerComment = data.last_owner_comment;
 
     /**
      * カテゴリID
      * @type {?string}
      */
-    this.category = data.movie.category;
+    this.category = data.category;
 
     /**
      * ライブ(録画)へのリンクURL
      * @type {string}
      */
-    this.link = data.movie.link;
+    this.link = data.link;
 
     /**
      * ライブ配信中かどうか
      * @type {Boolean}
      */
-    this.isLive = data.movie.is_live;
+    this.isLive = data.is_live;
 
     /**
      * 録画が公開されているかどうか
      * @type {Boolean}
      */
-    this.isRecorded = data.movie.is_recorded;
+    this.isRecorded = data.is_recorded;
 
     /**
      * 総コメント数
      * @type {number}
      */
-    this.commentCount = data.movie.comment_count;
+    this.commentCount = data.comment_count;
 
     /**
      * サムネイル画像(大)のURL
      * @type {string}
      */
-    this.largeThumbnail = data.movie.large_thumbnail;
+    this.largeThumbnail = data.large_thumbnail;
 
     /**
      * サムネイル画像(小)のURL
      * @type {string}
      */
-    this.smallThumbnail = data.movie.small_thumbnail;
+    this.smallThumbnail = data.small_thumbnail;
 
     /**
      * 配信地域(国コード)
      * @type {string}
      */
-    this.country = data.movie.country;
+    this.country = data.country;
 
     /**
      * 配信時間(秒)
      * @type {number}
      */
-    this.duration = data.movie.duration;
+    this.duration = data.duration;
 
     /**
      * 配信開始日時のunixタイムスタンプ
      * @type {number}
      */
-    this.created = data.movie.created;
+    this.created = data.created;
 
     /**
      * コラボ配信かどうか
      * @type {Boolean}
      */
-    this.isCollabo = data.movie.is_collabo;
+    this.isCollabo = data.is_collabo;
 
     /**
      * 合言葉配信かどうか
      * @type {Boolean}
      */
-    this.isProtected = data.movie.is_protected;
+    this.isProtected = data.is_protected;
 
     /**
      * 最大同時視聴数
      * @type {number}
      */
-    this.maxViewCount = data.movie.max_view_count;
+    this.maxViewCount = data.max_view_count;
 
     /**
      * 現在の同時視聴者数(配信中ではない場合0)
      * @type {number}
      */
-    this.currentViewCount = data.movie.current_view_count;
+    this.currentViewCount = data.current_view_count;
 
     /**
      * 総視聴者数
      * @type {number}
      */
-    this.totalViewCount = data.movie.total_view_count;
+    this.totalViewCount = data.total_view_count;
 
     /**
      * HTTP Live Streaming再生用のURL
      * @type {string}
      */
-    this.hlsUrl = data.movie.hls_url;
+    this.hlsUrl = data.hls_url;
   }
 }
 

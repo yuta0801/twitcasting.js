@@ -11,13 +11,13 @@ class SupporterUser extends User {
      * アイテム・スコア
      * @type {number}
      */
-    this.point = data.user.point;
+    this.point = data.point;
 
     /**
      * 累計スコア
      * @type {number}
      */
-    this.totalPoint = data.user.total_point;
+    this.totalPoint = data.total_point;
   }
 }
 

@@ -1,5 +1,5 @@
 /**
- * ユーザーを表す
+ * ユーザーを表すクラス
  */
 class User {
   constructor(data) {
@@ -11,44 +11,44 @@ class User {
      * ユーザID
      * @type {string}
      */
-    this.id = user.id;
+    this.id = data.id;
 
     /**
      * id同様にユーザを特定する識別子ですが、
      * screen_idはユーザによって変更される場合があります。
      * @type {string}
      */
-    this.screenId = user.screen_id;
+    this.screenId = data.screen_id;
 
     /**
      * ヒューマンリーダブルなユーザの名前
      * @type {string}
      */
-    this.name = user.name;
+    this.name = data.name;
 
     /**
      * ユーザアイコンのURL
      * @type {string}
      */
-    this.image = user.image;
+    this.image = data.image;
 
     /**
      * プロフィール文章
      * @type {string}
      */
-    this.profile = user.profile;
+    this.profile = data.profile;
 
     /**
      * ユーザのレベル
      * @type {number}
      */
-    this.level = user.level;
+    this.level = data.level;
 
     /**
      * ユーザが最後に配信したライブのID
      * @type {?string}
      */
-    this.lastMovieId = user.last_movie_id;
+    this.lastMovieId = data.last_movie_id;
 
     /**
      * 現在ライブ配信中かどうか
@@ -60,7 +60,7 @@ class User {
      * ユーザーが作成されたタイムスタンプ
      * @type {number}
      */
-    this.created = user.created;
+    this.created = data.created;
   }
 
   /**

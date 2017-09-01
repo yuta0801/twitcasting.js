@@ -271,13 +271,13 @@ class Client {
       offset: offset,
       limit: limit,
     }, data => {
-      let Supportings = [];
-      for (let supportings of data.supporting) {
-        Supportings.push(new SupporterUser(supportings));
+      let supportings = [];
+      for (let supporting of data.supporting) {
+        supportings.push(new SupporterUser(supporting));
       }
       return {
         total: total,
-        supporting: Supportings,
+        supporting: supportings,
       }
     })
   }
@@ -296,13 +296,13 @@ class Client {
       limit: limit,
       sort: sort,
     }, data => {
-      let Supportings = [];
-      for (let supportings of data.supporting) {
-        Supportings.push(new SupporterUser(supportings));
+      let supportings = [];
+      for (let supporting of data.supporting) {
+        supportings.push(new SupporterUser(supporting));
       }
       return {
         total: data.total,
-        supporters: Supportings,
+        supporters: supportings,
       }
     });
   }
