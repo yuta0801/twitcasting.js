@@ -49,6 +49,17 @@ class Client {
   }
 
   /**
+   * 配信中のライブのサムネイル画像URLを取得する
+   * @param  {string} userId            ユーザの id または screen_id
+   * @param  {string} [size=small]      画像サイズ (“large” or “small”)
+   * @param  {string} [position=latest] ライブ開始時点または最新を指定可能 (“beginning” or “latest”)
+   * @return {string}                   サムネイル画像URL
+   */
+  getLiveThumbnailImageUrl(userId, size='small', position='latest') {
+    return `${this.baseUrl}/users/${userId}/live/thumbnail?size=${size}&position=${position}`;
+  }
+
+  /**
    * アプリケーション、ユーザ情報
    * @typedef {Object} Application
    * @property {App} app アプリケーションを表す
