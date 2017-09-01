@@ -480,6 +480,10 @@ class Client {
   static get baseUrl() {
     return 'https://apiv2.twitcasting.tv'
   }
+
+  WebSocket() {
+    return new WebSocket(this.basic);
+  }
 }
 
 module.exports = Client;
