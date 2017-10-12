@@ -1,9 +1,9 @@
-const User = require('./User');
+const User = require('./User')
 
 class SupporterUser extends User {
   constructor(data) {
-    super();
-    if (data) setup(data);
+    super(data)
+    if (data) this.setup(data)
   }
 
   setup(data) {
@@ -11,14 +11,14 @@ class SupporterUser extends User {
      * アイテム・スコア
      * @type {number}
      */
-    this.point = data.point;
+    this.point = data.point
 
     /**
      * 累計スコア
      * @type {number}
      */
-    this.totalPoint = data.total_point;
+    this.totalPoint = data.total_point
   }
 }
 
-module.exports = SupporterUser;
+module.exports = SupporterUser

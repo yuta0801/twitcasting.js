@@ -5,7 +5,7 @@ const SubCategory = require('./SubCategory')
  */
 class Category {
   constructor(data) {
-    if (data) this.setup(data);
+    if (data) this.setup(data)
   }
 
   setup(data) {
@@ -13,24 +13,20 @@ class Category {
      * カテゴリID
      * @type {string}
      */
-    this.id = data.id;
+    this.id = data.id
 
     /**
      * カテゴリ名
      * @type {string}
      */
-    this.name = data.name;
+    this.name = data.name
 
     /**
      * サブカテゴリ
      * @type {SubCategory[]}
      */
-    let subCategoryArray = [];
-    for (let subCategory of data.sub_categories) {
-      subCategoryArray.push(new SubCategory(subCategory));
-    }
-    this.subCategories = subCategoryArray;
+    this.subCategories = data.sub_categories.map(e => new SubCategory(e))
   }
 }
 
-module.exports = Category;
+module.exports = Category

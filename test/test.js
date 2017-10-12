@@ -1,1 +1,1 @@
-const TwitCasting = require('../src/index');
+const TwitCasting = require('../src/index')

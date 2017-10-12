@@ -1,7 +1,12 @@
-const base64 = require('base-64');
-const Request = require('./Request');
-const User = require('../structures/User');
-const App = require('../structures/App');
+const base64 = require('base-64')
+const Request = require('./Request')
+
+const App = require('../structures/App')
+const Categorie = require('../structures/Category')
+const Movie = require('../structures/Movie')
+const SupporterUser = require('../structures/SupporterUser')
+const User = require('../structures/User')
+const WebHook = require('../structures/WebHook')
 
 class Client {
   /**
@@ -12,24 +17,23 @@ class Client {
    * ClinetIDが入力された場合にのみ必要です
    * @example
    * // tokenを使用する場合
-   * const token = '_Token_';
-   * const client = new TwitCasting.client(token);
+   * const token = '_Token_'
+   * const client = new TwitCasting.client(token)
    * @example
    * // ClinetIDとClientSecretを使用する場合
-   * const ClinetID = '_ClientSecret_';
-   * const ClientSecret = '_ClientID_';
-   * const client = new TwitCasting.client(ClinetID, ClientSecret);
+   * const ClinetID = '_ClientSecret_'
+   * const ClientSecret = '_ClientID_'
+   * const client = new TwitCasting.client(ClinetID, ClientSecret)
    */
   constructor(tokenOrClinetID, ClientSecret = null) {
     if (ClientSecret) {
-      let basic = base64.encode(`${tokenOrClinetID}:${ClientSecret}`);
-      this.basic = basic;
-      this.auth = `Basic ${str}`;
+      const basic = base64.encode(`${tokenOrClinetID}:${ClientSecret}`)
+      this.auth = `Basic ${basic}`
     } else {
-      this.auth = `Bearer ${tokenOrClinetID}`;
+      this.auth = `Bearer ${tokenOrClinetID}`
     }
 
-    this.request = new Request(this.auth);
+    this.request = new Request(this.auth)
   }
 
   /**
@@ -39,8 +43,8 @@ class Client {
    */
   getUserInfo(userId) {
     this.request(`GET /users/${userId}`, data => {
-      return new User(data.user);
-    });
+      return new User(data.user)
+    })
   }
 
   /**
@@ -50,8 +54,8 @@ class Client {
    * @param  {string} [position=latest] ライブ開始時点または最新を指定可能 (“beginning” or “latest”)
    * @return {string}                   サムネイル画像URL
    */
-  getLiveThumbnailImageUrl(userId, size='small', position='latest') {
-    return `${this.baseUrl}/users/${userId}/live/thumbnail?size=${size}&position=${position}`;
+  getLiveThumbnailImageURL(userId, size='small', position='latest') {
+    return `${this.baseURL}/users/${userId}/live/thumbnail?size=${size}&position=${position}`
   }
 
   /**
@@ -71,7 +75,7 @@ class Client {
         app:  new User(data.user),
         user: new App(data.app),
       }
-    });
+    })
   }
 
   /**
@@ -94,7 +98,7 @@ class Client {
         broadcaster: new User(data.broadcaster),
         tags: data.tags,
       }
-    });
+    })
   }
 
   /**
@@ -116,13 +120,11 @@ class Client {
       offset: offset,
       limit: limit,
     }, data => {
-      let Movies = [];
-      for (let movie of data.movies) Movies.push(new Movie(movie));
       return {
         totalCount: data.total_count,
-        movies: Movies,
+        movies: data.movies.map(e => new Movie(e)),
       }
-    });
+    })
   }
 
   /**
@@ -137,11 +139,11 @@ class Client {
         broadcaster: new User(data.broadcaster),
         tags: data.tags,
       }
-    });
+    })
   }
 
   /**
-   * 複数のコメントを表す
+   * 複数のコメントを表すオブジェクト
    * @type {Object} Comments
    * @property {string} movieId 動画ID
    * @property {number} allCount 総コメント数
@@ -162,14 +164,12 @@ class Client {
       limit: limit,
       slice_id: sliceId,
     }, data => {
-      let Comments = [];
-      for (let comment of data.comments) Comments.push(new Comment(data));
       return {
-        movieId: movie_id,
-        allCount: all_count,
-        comments: Comments,
+        movieId: data.movie_id,
+        allCount: data.all_count,
+        comments: data.comments.map(e => new Comment(e)),
       }
-    });
+    })
   }
 
   /**
@@ -192,8 +192,12 @@ class Client {
       comment: comment,
       sns: sns,
     }, data => {
-
-    });
+      return {
+        movieId: data.movie_id,
+        all_count: data.all_count,
+        comment: new Comment(data.comment),
+      }
+    })
   }
 
   /**
@@ -204,8 +208,8 @@ class Client {
    */
   deleteComment(movieId, commentId) {
     this.request(`DELETE /movies/${movieId}/comments/${commentId}`, data => {
-      return data.comment_id;
-    });
+      return data.comment_id
+    })
   }
 
   /**
@@ -229,7 +233,7 @@ class Client {
         isSupporting: data.is_supporting,
         targetUser: data.target_user,
       }
-    });
+    })
   }
 
   /**
@@ -241,8 +245,8 @@ class Client {
     this.request('PUT /support', {
       target_user_ids: targetUserIds,
     }, data => {
-      return data.addedCount;
-    });
+      return data.addedCount
+    })
   }
 
   /**
@@ -254,8 +258,8 @@ class Client {
     this.request('PUT /unsupport', {
       target_user_ids: targetUserIds,
     }, data => {
-      return data.removed_count;
-    });
+      return data.removed_count
+    })
   }
 
   /**
@@ -277,13 +281,9 @@ class Client {
       offset: offset,
       limit: limit,
     }, data => {
-      let supportings = [];
-      for (let supporting of data.supporting) {
-        supportings.push(new SupporterUser(supporting));
-      }
       return {
-        total: total,
-        supporting: supportings,
+        total: data.total,
+        supporting: data.supporting.map(e => new SupporterUser(e)),
       }
     })
   }
@@ -302,15 +302,11 @@ class Client {
       limit: limit,
       sort: sort,
     }, data => {
-      let supportings = [];
-      for (let supporting of data.supporting) {
-        supportings.push(new SupporterUser(supporting));
-      }
       return {
         total: data.total,
-        supporters: supportings,
+        supporters: data.supporting.map(e => new SupporterUser(e)),
       }
-    });
+    })
   }
 
   /**
@@ -322,12 +318,8 @@ class Client {
     this.request('GET /categories', {
       lang: lang,
     }, data => {
-      let Categories = [];
-      for (let categorie of data.categories) {
-        Categories.push(new Categorie(categorie));
-      }
-      return Categories;
-    });
+      return data.categories.map(e => new Categorie(e))
+    })
   }
 
   /**
@@ -343,10 +335,8 @@ class Client {
       limit: limit,
       lang: lang,
     }, data => {
-      let Users = [];
-      for (let user of data.users) Users.push(new User(data.users));
-      return Users;
-    });
+      return data.users.map(e => new User(e))
+    })
   }
 
   /**
@@ -364,10 +354,8 @@ class Client {
       context: context,
       lang: lang,
     }, data => {
-      let Movies = [];
-      for (let movie of data.movies) Movies.push(new Movie(movie));
-      return Movies;
-    });
+      return data.movies.map(e => new Movie(e))
+    })
   }
 
   /**
@@ -390,13 +378,11 @@ class Client {
       offset: offset,
       userId: userId,
     }, data => {
-      let WebHooks = [];
-      for (let webhook of data.webhooks) WebHooks.push(new WebHook(webhook));
       return {
-        allCount: all_count,
-        webhooks: WebHooks,
+        allCount: data.all_count,
+        webhooks: data.webhooks.map(e => new WebHook(e)),
       }
-    });
+    })
   }
 
   /**
@@ -421,16 +407,16 @@ class Client {
         userId: data.user_id,
         addedEvents: data.added_events,
       }
-    });
+    })
   }
 
   /**
    * WebHookを削除する
-   * @param  {string} user_id ユーザの id または screen_id
+   * @param  {string} userId ユーザの id または screen_id
    * @param  {Array} events  フックを削除するイベント種別
-   * @return {Object}         user_id、removed_events
+   * @return {Object}         userId、removed_events
    */
-  removeWebHook(user_id, events) {
+  removeWebHook(userId, events) {
     this.request('DELETE /webhooks', {
       user_id: userId,
       events: events,
@@ -439,7 +425,7 @@ class Client {
         userId: data.user_id,
         removedEvents: data.removed_events,
       }
-    });
+    })
   }
 
   /**
@@ -454,14 +440,14 @@ class Client {
    * アクセストークンに紐づくユーザの配信用のURL(RTMP)を取得する
    * @return {RTMPInfo}
    */
-  getRTMPUrl() {
+  getRTMPURL() {
     this.request('GET /rtmp_url', data => {
       return {
         enabled: data.enabled,
         url: data.url,
         streamKey: data.stream_key,
       }
-    });
+    })
   }
 
   /**
@@ -475,22 +461,18 @@ class Client {
    * アクセストークンに紐づくユーザの配信用のURL (WebM, WebSocket)を取得する
    * @return {WebMInfo}
    */
-  getWebMUrl() {
+  getWebMURL() {
     this.request('GET /webm_url', data => {
       return {
         enabled: data.enabled,
         url: data.url,
       }
-    });
+    })
   }
 
-  static get baseUrl() {
+  static get baseURL() {
     return 'https://apiv2.twitcasting.tv'
-  }
-
-  WebSocket() {
-    return new WebSocket(this.basic);
   }
 }
 
-module.exports = Client;
+module.exports = Client

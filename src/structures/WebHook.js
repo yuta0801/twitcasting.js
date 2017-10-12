@@ -3,7 +3,7 @@
  */
 class WebHook {
   constructor(data) {
-    if (data) this.setup(data);
+    if (data) this.setup(data)
   }
 
   setup(data) {
@@ -11,14 +11,14 @@ class WebHook {
      * ユーザID
      * @type {string}
      */
-    this.userId = data.user_id;
+    this.userId = data.user_id
 
     /**
      * フックするイベント種別
      * @type {string}
      */
-    this.event = data.event;
+    this.event = data.event
   }
 }
 
-module.exports = WebHook;
+module.exports = WebHook

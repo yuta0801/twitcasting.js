@@ -1,11 +1,11 @@
-const User = require('./User');
+const User = require('./User')
 
 /**
  * コメントを表す
  */
 class Comment {
-  constructor(data, client) {
-    if (data) this.setup(data);
+  constructor(data) {
+    if (data) this.setup(data)
   }
 
   setup(data) {
@@ -13,26 +13,26 @@ class Comment {
      * コメントID
      * @type {string}
      */
-    this.id = data.id;
+    this.id = data.id
 
     /**
      * コメント本文
      * @type {string}
      */
-    this.message = data.message;
+    this.message = data.message
 
     /**
      * コメント投稿者の情報
      * @type {User}
      */
-    this.fromUser = new User(data.from_user);
+    this.fromUser = new User(data.from_user)
 
     /**
      * コメント投稿日時のunixタイムスタンプ
      * @type {number}
      */
-    this.created = data.created;
+    this.created = data.created
   }
 }
 
-module.exports = Comment;
+module.exports = Comment

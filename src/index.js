@@ -11,4 +11,4 @@ module.exports = {
   SupporterUser: require('./structures/SupporterUser'),
   User: require('./structures/User'),
   WebHook: require('./structures/WebHook'),
-};
+}
