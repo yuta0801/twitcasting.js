@@ -30,4 +30,4 @@ class Request {
   }
 }
 
-module.exports = Request.send
+module.exports = Request

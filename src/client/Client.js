@@ -1,5 +1,6 @@
 const base64 = require('base-64')
 const Request = require('./Request')
+const WebSocket = require('./WebSocket')
 
 const App = require('../structures/App')
 const Categorie = require('../structures/Category')
@@ -25,7 +26,7 @@ class Client {
    * const ClientSecret = '_ClientID_'
    * const client = new TwitCasting.client(ClinetID, ClientSecret)
    */
-  constructor(tokenOrClinetID, ClientSecret = null) {
+  constructor(tokenOrClinetID, ClientSecret) {
     if (ClientSecret) {
       const basic = base64.encode(`${tokenOrClinetID}:${ClientSecret}`)
       this.auth = `Basic ${basic}`
@@ -33,7 +34,7 @@ class Client {
       this.auth = `Bearer ${tokenOrClinetID}`
     }
 
-    this.request = new Request(this.auth)
+    this.request = new Request(this.auth).send
   }
 
   /**
@@ -468,6 +469,10 @@ class Client {
         url: data.url,
       }
     })
+  }
+
+  get lives() {
+    return new WebSocket(this.auth)
   }
 
   static get baseURL() {
